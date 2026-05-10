@@ -625,7 +625,7 @@
         "accuracy": 8.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 7.2,
+        "overall": 7.0,
         "feedback": "Smooth Sōseki rendering with proper '老师' as common-noun-as-address; mistranslates 頭文字 (initials) as '姓氏或头衔' (surname or title). (-1.0 accuracy)"
       }
     },
@@ -640,7 +640,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 7.1,
+        "overall": 6.85,
         "feedback": "Strong literary rendering: correctly preserves 'Sensei' as romanized cultural term; handles 頭文字 properly as 'initials'. Reads as natural English literary prose."
       }
     },
@@ -670,7 +670,7 @@
         "accuracy": 8.7,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.1,
+        "overall": 7.8,
         "feedback": "Excellent rendering of Hu Shi's manifesto: captures '言之有物', '不作无病之呻吟', and the enumerative parallelism cleanly. Minor compression on '当世'. (-0.3 accuracy)"
       }
     },
@@ -685,7 +685,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.0,
-        "overall": 7.5,
+        "overall": 7.3,
         "feedback": "Strong Lu Xun rendering, somber return-home mood preserved; '苍黄的天' loses its 'pale-yellow' specificity to bland 'drab', and the '阿！' exclamation particle is dissolved into the rhetorical question. (-0.8 style)"
       }
     },

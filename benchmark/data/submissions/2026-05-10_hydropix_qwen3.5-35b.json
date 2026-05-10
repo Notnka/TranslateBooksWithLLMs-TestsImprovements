@@ -625,7 +625,7 @@
         "accuracy": 9.5,
         "fluency": 9.5,
         "style": 8.0,
-        "overall": 8.0,
+        "overall": 7.75,
         "feedback": "'先生' rendered as 'Master' rather than 'Sensei' (kept) loses the academic-honorific flavour standard for Sōseki translations (-0.5 style); 世間を憚る/心持は同じ事 captured cleanly."
       }
     },
@@ -640,7 +640,7 @@
         "accuracy": 8.7,
         "fluency": 9.5,
         "style": 8.5,
-        "overall": 7.5,
+        "overall": 6.7,
         "feedback": "Currency error: 30 jeon and 5 jeon → 'thirty won' / 'five-won pieces' (-0.5 acc, jeon ≠ won); '양복장이' (Western-suit wearer) dropped (-0.3 acc); '추적추적' / '찰깍' onomatopoeia rendered well."
       }
     },
@@ -655,7 +655,7 @@
         "accuracy": 9.5,
         "fluency": 9.5,
         "style": 9.0,
-        "overall": 8.7,
+        "overall": 8.1,
         "feedback": "Eight-point enumeration ('First, ... Second, ...') keeps Hu Shi's 一曰…二曰 rhythm; 'meaningless whining' for 无病之呻吟 is decent but loses the affected-illness idiom (-0.3 style); self-deprecating 末学不文 → 'mere scholar without literary distinction' captured."
       }
     },
@@ -670,7 +670,7 @@
         "accuracy": 9.5,
         "fluency": 9.5,
         "style": 9.0,
-        "overall": 8.4,
+        "overall": 8.2,
         "feedback": "Solid Lu Xun rendering; '苍黄的天' → 'grayish-yellow sky', '萧索的荒村' → 'desolate and lifeless villages' both precise; '阿！' → 'Alas!' captures the exclamation; '时时记得' → 'have remembered' loses 'constantly' (-0.3 acc)."
       }
     },
@@ -685,7 +685,7 @@
         "accuracy": 9.0,
         "fluency": 9.5,
         "style": 9.0,
-        "overall": 8.4,
+        "overall": 8.2,
         "feedback": "'頭文字' (initials/abbreviations) → '代称或头衔' (titles/appellations) is a misinterpretation (-0.5 acc); 先生 character preserved; '点破他的真名' / '提不起使用的兴致' idiomatic and period-appropriate."
       }
     }

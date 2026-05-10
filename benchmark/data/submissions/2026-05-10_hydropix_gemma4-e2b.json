@@ -625,7 +625,7 @@
         "accuracy": 8.0,
         "fluency": 7.5,
         "style": 7.0,
-        "overall": 7.4,
+        "overall": 7.15,
         "feedback": "'Unfamiliar initials' for 'よそよそしい頭文字' should be 'impersonal/standoffish' (-0.5 acc); 'It is the same with writing with a pen' awkward (-0.5 fluency)."
       }
     },
@@ -670,7 +670,7 @@
         "accuracy": 8.0,
         "fluency": 7.5,
         "style": 7.0,
-        "overall": 7.2,
+        "overall": 7.0,
         "feedback": "Lu Xun's mood mostly intact; '没有什么好心绪' rendered 'without any particular sentiment' (should be 'in poor spirits') (-0.5 acc); 'porthole' for '蓬隙' acceptable."
       }
     },
@@ -685,7 +685,7 @@
         "accuracy": 8.5,
         "fluency": 8.5,
         "style": 8.0,
-        "overall": 7.8,
+        "overall": 7.6,
         "feedback": "Faithful Soseki rendering into Chinese; '頭文字' (initials) rendered as '头衔' (title) is a drift (-1.0 acc)."
       }
     },
