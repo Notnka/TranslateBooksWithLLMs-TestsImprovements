@@ -26,6 +26,7 @@ def get_config_path():
 
 import src.config as _config
 from src.config import reload_config
+from src import __version__
 
 # Setup logger for this module
 logger = logging.getLogger('config_routes')
@@ -65,6 +66,7 @@ def create_config_blueprint(server_session_id=None):
             "translate_module": "loaded",
             "ollama_default_endpoint": _config.API_ENDPOINT,
             "supported_formats": ["txt", "epub", "srt"],
+            "version": __version__,
             "startup_time": startup_time,  # Used to detect server restarts
             "session_id": startup_time  # Alias for compatibility with LifecycleManager
         })

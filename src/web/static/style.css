@@ -252,6 +252,15 @@ body {
     margin-top: 0.25rem;
 }
 
+.header .logo-text .app-version {
+    color: var(--text-muted-light);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    margin-left: 0.35rem;
+    vertical-align: middle;
+}
+
 .header .status-section {
     display: flex;
     align-items: center;

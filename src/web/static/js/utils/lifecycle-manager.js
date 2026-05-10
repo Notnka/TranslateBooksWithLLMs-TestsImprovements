@@ -77,6 +77,14 @@ export const LifecycleManager = {
                     MessageLogger.addLog(`Supported file formats: ${healthData.supported_formats.join(', ')}`);
                 }
 
+                if (healthData.version) {
+                    const versionEl = document.getElementById('appVersion');
+                    if (versionEl) {
+                        versionEl.textContent = `v${healthData.version}`;
+                        versionEl.title = `TBL v${healthData.version}`;
+                    }
+                }
+
                 this.initializeConnection();
 
             } catch (error) {
