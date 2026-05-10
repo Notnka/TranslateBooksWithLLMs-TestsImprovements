@@ -7,7 +7,7 @@
   "environment": {
     "tbl_version": "git-fb75e45",
     "prompt_version": "v1",
-    "judge_id": "claude-opus-4-7-rubric-v1"
+    "judge_id": "claude-opus-4-7-rubric-v1-reranked"
   },
   "model": {
     "provider": "ollama",
@@ -40,7 +40,7 @@
         "accuracy": 8.0,
         "fluency": 9.0,
         "style": 8.0,
-        "overall": 7.5,
+        "overall": 7.0,
         "feedback": "Wilde botanical lexicon mishandled: 'pink-flowering thorn' → 山荆棘 (invented compound, should be 山楂), 'Persian saddle-bags' → 马鞍垫 (saddle-pad, not bags) (-0.5 each acc); 金雨花 for laburnum is a calque of 'golden rain' rather than the standard 金链花 (-0.3 acc)."
       }
     },
@@ -55,7 +55,7 @@
         "accuracy": 8.5,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 7.8,
         "feedback": "Clean technical Chinese for relativity passage; minor tense/aspect drift on 'developed in Section VII' rendered as 将...阐述 (future) instead of past (-0.5 acc), but logical structure intact."
       }
     },
@@ -70,7 +70,7 @@
         "accuracy": 8.5,
         "fluency": 9.0,
         "style": 8.0,
-        "overall": 8.0,
+        "overall": 7.6,
         "feedback": "Iron-string metaphor lost ('坚韧的弦' = tough string, drops 铁) (-0.5 style); 'betraying their perception' flattened to '深知' (-0.5 style); 'connection' rendered as 羁绊 (bond) is a slight overshoot (-0.3 acc)."
       }
     },
@@ -85,7 +85,7 @@
         "accuracy": 8.5,
         "fluency": 9.0,
         "style": 7.5,
-        "overall": 7.5,
+        "overall": 7.4,
         "feedback": "'Regulating the circulation' translated metaphorically as 调理心境 loses Melville's literal/medical layer (-0.5 acc); 'grim about the mouth' flattened to 心情阴郁, dropping the embodied image (-0.5 style); 'drizzly' subsumed into 阴冷潮湿 (-0.3 style)."
       }
     },
@@ -100,7 +100,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.2,
         "feedback": "Faithful 19th-c. scientific register; Darwin's hedging ('I hope', 'No doubt', 'I must trust') preserved through 希望/无疑 patterns. No notable errors."
       }
     },
@@ -130,7 +130,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.2,
         "feedback": "Clean Sherlock dialogue; '我看你曾在阿富汗待过' is natural and deductive; '好家伙' for 'Why, man' slightly modern but lively. Technical terms (血红蛋白, 法医学) accurate."
       }
     },
@@ -160,7 +160,7 @@
         "accuracy": 8.5,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.1,
         "feedback": "'live deliberately' rendered as 生活得有意义 (live meaningfully) is a slight semantic drift from 'with intention' (-0.5 acc); 'practise resignation' → 习惯于无奈的妥协 captures sense but weakens the philosophical register (-0.3 style)."
       }
     },
@@ -175,7 +175,7 @@
         "accuracy": 9.0,
         "fluency": 7.5,
         "style": 8.0,
-        "overall": 7.5,
+        "overall": 7.0,
         "feedback": "Two non-standard reflexive verb forms: 'abúsate' (should be 'abusa de ti') and 'ménospreciate' with mis-accent (should be 'menospréciate') (-1.0 fluency total); meaning preserved and Stoic register adequate."
       }
     },
@@ -205,7 +205,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 7.8,
         "feedback": "Clean Spanish physics prose; 'tácitamente asumido' and 'en el vacío' for 'in vacuo' are conventionally correct; reasoning chain ('si descartamos... entonces desaparece') intact."
       }
     },
@@ -235,7 +235,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 7.7,
         "feedback": "'Llámenme Ismael' is the canonical opening; 'regular la circulación' preserves Melville's medical register literally; 'mi semblante se vuelve sombrío' for 'grim about the mouth' loses the mouth specificity (-0.3 style)."
       }
     },
@@ -250,7 +250,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 7.7,
         "feedback": "Strong formal Spanish scientific register; 'fuentes fidedignas' and 'datos ilustrativos' faithful; Darwin's epistemic stance ('debo confiar', 'sin duda', 'espero') preserved."
       }
     },
@@ -265,7 +265,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 7.8,
         "feedback": "'Es una verdad universalmente reconocida' matches the canonical Spanish opening; 'debe de sentir la necesidad de casarse' uses inferential 'debe de' which carries Austen's irony well; 'caballero' adds period flavor."
       }
     },
@@ -280,7 +280,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 7.7,
         "feedback": "Dialogue flows naturally; 'percibo' for 'I perceive' is literal but functional (-0.3 style for slightly stiff Sherlock voice); 'medico-legal' technical term accurate."
       }
     },
@@ -295,7 +295,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 7.8,
         "feedback": "Twain's ironic deflation captured; 'la prueba infalible' echoes the source's mock-formal register; closing line 'No es nada; es del Renacimiento' lands cleanly."
       }
     },
@@ -310,7 +310,7 @@
         "accuracy": 9.0,
         "fluency": 8.5,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.2,
         "feedback": "'Vivir deliberadamente' is the strongest rendering across languages of Thoreau's key phrase; 'succionar toda la médula' is technical/medical Spanish where literary 'extraer/absorber' would be more idiomatic (-0.5 fluency)."
       }
     },
@@ -325,7 +325,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.1,
         "feedback": "Strong French Stoic register: 'Fais-le, ô mon âme', 'méprise-toi', 'le temps où tu pourras t'estimer sera révolu'; 'sans fin' is a slight addition but rhythmically apt."
       }
     },
@@ -340,7 +340,7 @@
         "accuracy": 7.5,
         "fluency": 8.5,
         "style": 8.0,
-        "overall": 7.0,
+        "overall": 7.2,
         "feedback": "Rubric-example errors recur: 'pink-flowering thorn' → 'églantier' (wild rose, not aubépine) (-0.5 acc); 'laburnum' left untranslated in French target (should be 'cytise') (-1.5 acc, -1.0 fluency); 'sacoches persanes' is correct for saddle-bags."
       }
     },
@@ -355,7 +355,7 @@
         "accuracy": 8.5,
         "fluency": 8.5,
         "style": 8.5,
-        "overall": 8.0,
+        "overall": 7.4,
         "feedback": "Opening 'Désormais, avant l'avènement' misuses 'Désormais' (= henceforth) where Einstein's 'Now' is a discourse particle ('Or...') (-0.5 acc, -0.5 fluency); 'lumière dans le vide' and 'simultanéité' are conventionally correct."
       }
     },
@@ -370,7 +370,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.2,
         "feedback": "Rich literary French; 'corde d'acier' (steel) for 'iron string' is a slight metallurgical drift (should be 'corde de fer') (-0.3 style); 'avec une confiance d'enfant' captures the childlike trust beautifully."
       }
     },
@@ -400,7 +400,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.2,
         "feedback": "Period-appropriate French scientific prose; 'résumé' for Darwin's 'Abstract' conventional; epistemic verbs ('je dois m'en remettre', 'sans doute', 'j'espère') preserve the cautious authorial stance."
       }
     },
@@ -415,7 +415,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 7.9,
         "feedback": "Matches the canonical French Austen opening; 'aussi peu connus que puissent être les sentiments' is a strong concessive construction; closing 'propriété légitime' preserves the property-conceit irony."
       }
     },
@@ -430,7 +430,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 7.9,
         "feedback": "Dialogue flows naturally; 'je présume' slightly softer than 'je perçois/je constate' for the deductive Sherlock register (-0.3 style); 'Mais enfin, mon cher' is an apt French equivalent of 'Why, man'."
       }
     },
@@ -445,7 +445,7 @@
         "accuracy": 8.5,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 7.8,
         "feedback": "'Glory to think' rendered as 'm'égare en pensant' (lose myself thinking) is a sense-shift from exaltation to wandering thought (-0.5 acc); 'a douché mon enthousiasme' is a strong French metaphor for crushing enthusiasm."
       }
     },
@@ -460,7 +460,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.2,
         "feedback": "'Vivre délibérément' is precise; 'm'exercer à la résignation' captures the philosophical practice sense well; 'extraire toute la moelle' is the canonical French Walden image."
       }
     },
@@ -475,7 +475,7 @@
         "accuracy": 8.0,
         "fluency": 9.0,
         "style": 8.0,
-        "overall": 7.5,
+        "overall": 7.6,
         "feedback": "Opening contresens: 'Do, soul, do' rendered 'Hãy nhìn lại đi' (Look back, soul) instead of imperative 'làm đi' — meaning reversed at a load-bearing line (-1.5 acc); 'phù phiếm' adds editorial color not in source (-0.3 acc); otherwise archaic Vietnamese register apt."
       }
     },
@@ -490,7 +490,7 @@
         "accuracy": 7.5,
         "fluency": 9.0,
         "style": 7.5,
-        "overall": 7.0,
+        "overall": 6.5,
         "feedback": "Multiple botanical/material errors in a Wilde passage where imagery is the point: 'pink-flowering thorn' → 'gai hoa hồng' (rose thorn) (-0.5 acc); 'Persian saddle-bags' → 'vải dệt kiểu Ba Tư' (Persian-style fabric) (-1.0 acc); 'laburnum' → 'cây phi yến' (delphinium/larkspur, wrong species) (-1.0 acc, -0.5 style)."
       }
     },
@@ -505,7 +505,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 7.8,
         "feedback": "Strong Vietnamese physics register; 'hệ quy chiếu', 'tính đồng thời', 'truyền ánh sáng trong chân không' are all conventional; past tense on 'đã được triển khai' correct for Einstein's reference."
       }
     },
@@ -520,7 +520,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.1,
         "feedback": "Iron-string metaphor preserved ('sợi dây sắt'); 'thiên mệnh' for 'divine providence' is a culturally apt Confucian/Buddhist resonance; 'phó thác bản thân một cách hồn nhiên' captures the childlike trust nicely."
       }
     },
@@ -535,7 +535,7 @@
         "accuracy": 8.0,
         "fluency": 9.0,
         "style": 8.0,
-        "overall": 7.5,
+        "overall": 7.6,
         "feedback": "'Watery part of the world' → 'thế giới thủy cung' (underwater palace world) over-mythologizes the literal sea (-0.5 acc); 'regulating the circulation' → 'điều hòa lại tâm hồn' (regulate the soul) drops the medical layer (-1.0 acc); 'cau có' for 'grim about the mouth' loses the embodied image (-0.3 style)."
       }
     },
@@ -550,7 +550,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 7.9,
         "feedback": "Faithful Vietnamese scientific prose; Darwin's hedging ('chắc chắn', 'tôi hy vọng', 'không tránh khỏi') preserved; 'nguồn tài liệu uy tín' is the right register for 'good authorities'."
       }
     },
@@ -580,7 +580,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.0,
-        "overall": 8.0,
+        "overall": 7.6,
         "feedback": "'I perceive' → 'Tôi đoán là' (I guess) flattens the deductive Sherlockian register (-0.5 style); 'huyết sắc tố' and 'pháp y' technical terms correct; dialogue flows naturally."
       }
     },
@@ -595,7 +595,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 7.7,
         "feedback": "Twain's ironic deflation preserved; 'minh chứng không thể sai lệch' is the right register for 'infallible proof'; closing 'đó chỉ là đồ thời Phục hưng thôi' captures the dismissive tone with the colloquial 'đồ'."
       }
     },
@@ -610,7 +610,7 @@
         "accuracy": 8.5,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.1,
         "feedback": "'Cuộc đời tỉnh thức' for 'live deliberately' has Buddhist resonance Thoreau would not disown; 'bàng hoàng nhận ra' (stunned to realize) intensifies neutral 'discover' (-0.3 acc); 'tận hưởng đến giọt cuối cùng tinh túy' sweetens 'suck out all the marrow' (-0.3 style)."
       }
     },
@@ -625,7 +625,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 7.9,
         "feedback": "Sōseki's calm reflective voice preserved; 'not so much out of a desire to avoid public scrutiny as it is because it feels more natural' captures 世間を憚る 遠慮 with literary register; 'something as distant as initials' for よそよそしい頭文字 idiomatic."
       }
     },
@@ -640,7 +640,7 @@
         "accuracy": 8.5,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.1,
         "feedback": "'Primly overcast' is an inspired rendering of 새침하게 흐린; 'Dongsomun' transliteration correct; 'thirty cents'/'fifty cents' localizes 전 to a generic monetary unit, losing the period-specific Joseon coinage (-0.3 acc); 'ten-cent white coins' captures 백통화 well."
       }
     },
@@ -655,7 +655,7 @@
         "accuracy": 8.0,
         "fluency": 9.0,
         "style": 8.0,
-        "overall": 8.0,
+        "overall": 7.7,
         "feedback": "Hu Shi's enumerative parallelism partly weakened by mixed modal verbs (must/should/one must) (-0.5 style); 'blindly imitate', 'strict attention', 'excessive use of classical allusions' add interpretive softeners not in 不摹仿/讲求/不用典 (-0.3 acc each); the parenthetical gloss on 'groaning without illness' is an editorial choice that breaks the eight-point rhythm."
       }
     },
@@ -670,7 +670,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 7.9,
         "feedback": "Lu Xun's introspective register preserved; 'pale, sallow sky' captures 苍黄 with appropriate doubling; '阿!' rendered as 'Ah!' keeps the emotional break; 'merely a reflection of my own state of mind' is a clean rendering of 这只是我自己心情的改变罢了."
       }
     },
@@ -685,7 +685,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 7.9,
         "feedback": "Faithful Chinese rendering of Sōseki; '与其说...不如说' captures 世間を憚る 遠慮 elegantly; '即便在动笔写作时，心情也是一样' preserves the writerly reflection of 筆を執っても心持は同じ事である."
       }
     },
@@ -730,7 +730,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.6,
         "feedback": "Clean Einstein DE with 'im Vakuum' and 'Bezugskörper'; logical connectors well-handled."
       }
     },
@@ -790,7 +790,7 @@
         "accuracy": 8.5,
         "fluency": 8.5,
         "style": 8.0,
-        "overall": 8.0,
+        "overall": 8.2,
         "feedback": "Solid Austen DE; 'sucht' slightly flattens the ironic 'must be in want of' (-0.5 style)."
       }
     },
@@ -925,7 +925,7 @@
         "accuracy": 9.0,
         "fluency": 8.5,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.1,
         "feedback": "Faithful Darwin hedging in PT; 'Resumo' correctly translates 'Abstract'."
       }
     },
@@ -985,7 +985,7 @@
         "accuracy": 9.0,
         "fluency": 8.5,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.4,
         "feedback": "Walden PT with idiomatic 'sugar a medula da vida' for 'marrow of life'."
       }
     },
@@ -1030,7 +1030,7 @@
         "accuracy": 9.0,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.1,
         "feedback": "Clean technical JA with proper 真空中 and 基準 conventions."
       }
     },
@@ -1120,7 +1120,7 @@
         "accuracy": 8.5,
         "fluency": 8.0,
         "style": 8.0,
-        "overall": 8.0,
+        "overall": 8.2,
         "feedback": "Twain's irony lands in JA; 膨らみ上がった is slightly clunky (-0.5 fluency)."
       }
     },
@@ -1390,7 +1390,7 @@
         "accuracy": 8.5,
         "fluency": 9.0,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.1,
         "feedback": "Strong Austen RU with 'добычей' (prey) preserving the ironic property idea."
       }
     },
@@ -1450,7 +1450,7 @@
         "accuracy": 8.0,
         "fluency": 7.0,
         "style": 8.0,
-        "overall": 7.5,
+        "overall": 7.2,
         "feedback": "Stoic IT register holds but 'abus' (apocope of 'abusa') and coined verb 'randagiare' hurt fluency (-0.5 each)."
       }
     },
@@ -1780,7 +1780,7 @@
         "accuracy": 8.5,
         "fluency": 8.5,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.0,
         "feedback": "Strong physics HI with 'एककालिकता' and 'निर्वात'; English-in-parens adds source words mildly (-0.3 acc)."
       }
     },
@@ -1945,7 +1945,7 @@
         "accuracy": 8.5,
         "fluency": 8.5,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.1,
         "feedback": "Faithful Emerson NL; 'ijzeren snaar' preserves the iron-string image."
       }
     },
@@ -1975,7 +1975,7 @@
         "accuracy": 9.0,
         "fluency": 8.5,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.1,
         "feedback": "Faithful Darwin NL with 'samenvatting' apt for 'Abstract'."
       }
     },
@@ -2185,7 +2185,7 @@
         "accuracy": 9.0,
         "fluency": 8.5,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.1,
         "feedback": "Walden PL with 'wyssać szpik z życia' canonical for 'marrow'."
       }
     },
@@ -2230,7 +2230,7 @@
         "accuracy": 9.0,
         "fluency": 8.5,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.4,
         "feedback": "Clean Einstein SV with 'i vakuum' and 'referenssystemets'."
       }
     },
@@ -2245,7 +2245,7 @@
         "accuracy": 8.5,
         "fluency": 8.5,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.1,
         "feedback": "Faithful Emerson SV with 'järnsträngen' preserving the iron-string."
       }
     },
@@ -2260,7 +2260,7 @@
         "accuracy": 8.5,
         "fluency": 8.0,
         "style": 8.0,
-        "overall": 8.0,
+        "overall": 7.8,
         "feedback": "Solid Moby SV; 'Vart och när' is a slightly off rendering of 'whenever' (-0.3 fluency)."
       }
     },
@@ -2380,7 +2380,7 @@
         "accuracy": 8.0,
         "fluency": 8.5,
         "style": 8.5,
-        "overall": 8.0,
+        "overall": 8.2,
         "feedback": "Solid Einstein DA; 'referencemålestok' (=yardstick) is a wrong technical term (should be 'referencelegeme/referencesystem') (-0.5 acc)."
       }
     },
@@ -2395,7 +2395,7 @@
         "accuracy": 8.5,
         "fluency": 8.5,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.1,
         "feedback": "Faithful Emerson DA with 'jernstreng' preserving iron-string."
       }
     },
@@ -2515,7 +2515,7 @@
         "accuracy": 6.5,
         "fluency": 5.5,
         "style": 6.5,
-        "overall": 5.5,
+        "overall": 5.0,
         "feedback": "Severe failure: Indonesian word 'diperlukan' inside Greek text (-2.0 fluency); 'περσικά χαλιά' replaces saddle-bags (-0.5 acc); 'χρυσών ανθοδέσμων' (=golden bouquets) misrenders 'blossoms'."
       }
     },
@@ -2650,7 +2650,7 @@
         "accuracy": 8.5,
         "fluency": 8.5,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.4,
         "feedback": "Solid Stoic TH with archaic 'เถิด' particles and 'ดวงวิญญาณเอ๋ย' apt vocative."
       }
     },
@@ -2830,7 +2830,7 @@
         "accuracy": 9.0,
         "fluency": 8.5,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.1,
         "feedback": "Clean Einstein ID with 'ruang hampa' for vacuum."
       }
     },
@@ -2860,7 +2860,7 @@
         "accuracy": 8.0,
         "fluency": 8.5,
         "style": 8.0,
-        "overall": 8.0,
+        "overall": 8.2,
         "feedback": "Faithful Moby ID; 'sirkulasi jiwaku' adds 'soul's' to 'circulation' (-0.3 acc)."
       }
     },
@@ -2890,7 +2890,7 @@
         "accuracy": 8.5,
         "fluency": 8.5,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.1,
         "feedback": "Solid Austen ID; 'milik sah' captures 'rightful property'."
       }
     },
@@ -3025,7 +3025,7 @@
         "accuracy": 9.0,
         "fluency": 8.5,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.4,
         "feedback": "Polished Darwin BN with 'সারাংশ' apt for 'Abstract'."
       }
     },
@@ -3175,7 +3175,7 @@
         "accuracy": 8.5,
         "fluency": 8.5,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.0,
         "feedback": "Faithful Darwin TA with 'சுருக்கம்'; '(Abstract)' parenthetical mild noise."
       }
     },
@@ -3310,7 +3310,7 @@
         "accuracy": 7.5,
         "fluency": 8.0,
         "style": 8.0,
-        "overall": 7.5,
+        "overall": 7.2,
         "feedback": "Faithful Moby HE with 'המרה' for spleen; 'פניי מזמזמות' (=face hums/buzzes) wrong for 'grim mouth' (-0.5 each)."
       }
     },
@@ -3325,7 +3325,7 @@
         "accuracy": 9.0,
         "fluency": 8.5,
         "style": 8.5,
-        "overall": 8.5,
+        "overall": 8.1,
         "feedback": "Solid Darwin HE with 'סיכום' apt for 'Abstract'."
       }
     },
@@ -3355,7 +3355,7 @@
         "accuracy": 8.0,
         "fluency": 7.5,
         "style": 8.0,
-        "overall": 7.5,
+        "overall": 7.2,
         "feedback": "Holmes HE; 'צחוק קט רשמי' (=formal small laughter) doesn't fit 'chuckling' (-0.5 fluency)."
       }
     },
@@ -3385,7 +3385,7 @@
         "accuracy": 8.5,
         "fluency": 8.0,
         "style": 7.5,
-        "overall": 7.5,
+        "overall": 7.9,
         "feedback": "Walden HE; 'מחית החיים' (=puree of life) is an awkward modern reading of 'marrow' (should be 'מח/לשד') (-0.5 each style/fluency)."
       }
     },
