@@ -15,6 +15,8 @@ from src.utils.unified_logger import setup_cli_logger, LogType
 from src.tts.tts_config import TTSConfig, TTS_ENABLED, TTS_VOICE, TTS_RATE, TTS_BITRATE, TTS_OUTPUT_FORMAT
 from src.persistence.checkpoint_manager import CheckpointManager
 from src.core.adapters import translate_file
+from src.utils.notifier import notify, EVENT_SUCCESS, EVENT_FAILURE
+import time
 import uuid
 
 
@@ -158,6 +160,7 @@ if __name__ == "__main__":
         except Exception as e:
             parser.error(f"Failed to load glossary {args.glossary}: {e}")
 
+    start_time = time.time()
     try:
         # Create checkpoint manager for resume capability
         checkpoint_manager = CheckpointManager()
@@ -194,6 +197,16 @@ if __name__ == "__main__":
             'output_file': args.output
         })
 
+        notify(EVENT_SUCCESS, {
+            'file': args.input,
+            'output': args.output,
+            'duration_seconds': time.time() - start_time,
+            'provider': args.provider,
+            'model': args.model,
+            'source_lang': args.source_lang,
+            'target_lang': args.target_lang,
+        })
+
         # TTS Generation (if enabled)
         if args.tts:
             logger.info("Starting TTS Generation", LogType.INFO, {
@@ -226,4 +239,13 @@ if __name__ == "__main__":
         logger.error(f"Translation failed: {str(e)}", LogType.ERROR_DETAIL, {
             'details': str(e),
             'input_file': args.input
+        })
+
+        notify(EVENT_FAILURE, {
+            'file': args.input,
+            'output': args.output,
+            'duration_seconds': time.time() - start_time,
+            'provider': args.provider,
+            'model': args.model,
+            'error': str(e),
         })

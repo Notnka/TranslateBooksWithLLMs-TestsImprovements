@@ -17,7 +17,25 @@ from src.core.llm.exceptions import RateLimitError
 from src.config import AUTO_PAUSE_ON_RATE_LIMIT, RATE_LIMIT_AUTO_RESUME_DELAY
 from src.core.adapters import translate_file
 from src.tts.tts_config import TTSConfig
+from src.utils.notifier import notify, EVENT_SUCCESS, EVENT_FAILURE, EVENT_INTERRUPTION
 from .websocket import emit_update
+
+
+def _notification_context(config, translation_id, elapsed_time, error=None):
+    """Build the context dict passed to webhook notifications."""
+    ctx = {
+        'translation_id': translation_id,
+        'file': config.get('original_filename') or config.get('input_filename') or config.get('file_path'),
+        'output': config.get('output_filename'),
+        'duration_seconds': elapsed_time,
+        'provider': config.get('llm_provider'),
+        'model': config.get('model'),
+        'source_lang': config.get('source_language'),
+        'target_lang': config.get('target_language'),
+    }
+    if error:
+        ctx['error'] = error
+    return ctx
 
 
 def run_translation_async_wrapper(translation_id, config, state_manager, output_dir, socketio):
@@ -368,6 +386,8 @@ async def perform_actual_translation(translation_id, config, state_manager, outp
             state_manager.set_translation_field(translation_id, 'status', 'interrupted')
             _log_message_callback("summary_interrupted", f"🛑 Translation interrupted - partial result saved ({elapsed_time:.2f}s)")
             final_status_payload['status'] = 'interrupted'
+            await asyncio.to_thread(notify, EVENT_INTERRUPTION,
+                _notification_context(config, translation_id, elapsed_time))
 
             # Mark checkpoint as interrupted in database
             checkpoint_manager.mark_interrupted(translation_id)
@@ -433,6 +453,8 @@ async def perform_actual_translation(translation_id, config, state_manager, outp
             _log_message_callback("summary_completed", f"✅ Translation completed in {elapsed_time:.2f}s{stats_summary}")
 
             final_status_payload['status'] = 'completed'
+            await asyncio.to_thread(notify, EVENT_SUCCESS,
+                _notification_context(config, translation_id, elapsed_time))
 
             # Cleanup completed job checkpoint (automatic immediate cleanup)
             checkpoint_manager.cleanup_completed_job(translation_id)
@@ -461,6 +483,9 @@ async def perform_actual_translation(translation_id, config, state_manager, outp
             _log_message_callback("summary_error_final", f"❌ Translation finished with errors ({elapsed_time:.2f}s)")
             final_status_payload['status'] = 'error'
             final_status_payload['error'] = state_manager.get_translation_field(translation_id, 'error') or 'Unknown error during finalization.'
+            await asyncio.to_thread(notify, EVENT_FAILURE,
+                _notification_context(config, translation_id, elapsed_time,
+                                      error=final_status_payload['error']))
 
         # Stats are now included in the consolidated completion message above
 
@@ -590,6 +615,12 @@ async def perform_actual_translation(translation_id, config, state_manager, outp
                 'status': 'error',
                 'result': state_manager.get_translation_field(translation_id, 'result') or f"Translation failed: {critical_error_msg}"
             }, state_manager)
+
+            stats = state_manager.get_translation_field(translation_id, 'stats') or {}
+            elapsed_time = time.time() - stats.get('start_time', time.time())
+            await asyncio.to_thread(notify, EVENT_FAILURE,
+                _notification_context(config, translation_id, elapsed_time,
+                                      error=critical_error_msg))
 
 
 async def _perform_tts_generation(translation_id, config, output_filepath, state_manager, socketio, log_callback):

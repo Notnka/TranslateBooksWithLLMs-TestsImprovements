@@ -270,6 +270,24 @@ OUTPUT_DIR = str(Path(os.getenv('OUTPUT_DIR', 'translated_files')).expanduser().
 # Placeholders: {originalName}, {targetLang}, {sourceLang}, {model}, {date}, {datetime}, {ext}
 # OUTPUT_FILENAME_PATTERN is loaded via _apply_reloadable_env_settings()
 
+# =============================================================================
+# WEBHOOK NOTIFICATIONS
+# =============================================================================
+# Send an HTTP request to an arbitrary webhook (gotify, ntfy, Discord, Slack,
+# Healthchecks, custom curl-like endpoint) when a translation reaches a
+# terminal state. Disabled by default; set NOTIFY_WEBHOOK_URL to enable.
+#
+# These values are read at module import and are NOT included in
+# _RELOADABLE_ENV_SETTINGS — restart the app to pick up changes made to .env.
+NOTIFY_WEBHOOK_URL = os.getenv('NOTIFY_WEBHOOK_URL', '')
+NOTIFY_WEBHOOK_METHOD = os.getenv('NOTIFY_WEBHOOK_METHOD', 'POST')
+NOTIFY_WEBHOOK_HEADERS = os.getenv('NOTIFY_WEBHOOK_HEADERS', '')
+NOTIFY_WEBHOOK_PAYLOAD = os.getenv('NOTIFY_WEBHOOK_PAYLOAD', '')
+NOTIFY_ON_SUCCESS = os.getenv('NOTIFY_ON_SUCCESS', 'true').lower() == 'true'
+NOTIFY_ON_FAILURE = os.getenv('NOTIFY_ON_FAILURE', 'true').lower() == 'true'
+NOTIFY_ON_INTERRUPTION = os.getenv('NOTIFY_ON_INTERRUPTION', 'false').lower() == 'true'
+NOTIFY_TIMEOUT_SECONDS = int(os.getenv('NOTIFY_TIMEOUT_SECONDS', '5'))
+
 # Debug mode (reload after .env is loaded)
 DEBUG_MODE = os.getenv('DEBUG_MODE', 'false').lower() == 'true'
 
