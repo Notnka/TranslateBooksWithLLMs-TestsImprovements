@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Translate Books with LLMs</h1>
+  <h1>TBL - Translate Books with LLMs</h1>
 </div>
 
 <div align="center">
