@@ -222,11 +222,4 @@ See [DOCKER.md](DOCKER.md) for more options.
 
 ---
 
-## Links
-
-- [Report Issues](https://github.com/hydropix/TranslateBooksWithLLMs/issues)
-- [OpenRouter Models](https://openrouter.ai/models)
-
----
-
 **License:** AGPL-3.0
