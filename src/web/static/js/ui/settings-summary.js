@@ -69,19 +69,22 @@ function buildLlmLine() {
 function buildChips() {
     const chips = [];
 
+    // The "None" option always has value="" — check the value, not the
+    // displayed text, since the text is localized ("Aucun", "Ninguno", ...).
+    const hasGlossary = !!(DomHelpers.getValue('glossarySelect') || '').trim();
+    const hasInstructions = !!(DomHelpers.getValue('customInstructionSelect') || '').trim();
+
     // Refine-only is exclusive: show only the prominent chip plus the few
     // options that still apply (glossary, instructions, auto-pause).
     if (isChecked('refineOnlyMode')) {
         chips.push({ key: 'refineOnly', label: 'Refine Only (skips translation)', prominent: true });
 
-        const glossaryText = getSelectText('glossarySelect');
-        if (glossaryText && glossaryText !== 'None') {
-            const name = glossaryText.split('·')[0].trim();
+        if (hasGlossary) {
+            const name = getSelectText('glossarySelect').split('·')[0].trim();
             chips.push({ key: 'glossary', label: `Glossary: ${name}` });
         }
-        const instrText = getSelectText('customInstructionSelect');
-        if (instrText && instrText !== 'None') {
-            chips.push({ key: 'instructions', label: `Instructions: ${instrText}` });
+        if (hasInstructions) {
+            chips.push({ key: 'instructions', label: `Instructions: ${getSelectText('customInstructionSelect')}` });
         }
         if (isChecked('disableAutoPause')) {
             chips.push({ key: 'noPause', label: 'No auto-pause' });
@@ -95,15 +98,13 @@ function buildChips() {
     if (isChecked('textCleanup'))       chips.push({ key: 'ocr', label: 'OCR cleanup' });
     if (isChecked('disableAutoPause'))  chips.push({ key: 'noPause', label: 'No auto-pause' });
 
-    const glossaryText = getSelectText('glossarySelect');
-    if (glossaryText && glossaryText !== 'None') {
-        const name = glossaryText.split('·')[0].trim();
+    if (hasGlossary) {
+        const name = getSelectText('glossarySelect').split('·')[0].trim();
         chips.push({ key: 'glossary', label: `Glossary: ${name}` });
     }
 
-    const instrText = getSelectText('customInstructionSelect');
-    if (instrText && instrText !== 'None') {
-        chips.push({ key: 'instructions', label: `Instructions: ${instrText}` });
+    if (hasInstructions) {
+        chips.push({ key: 'instructions', label: `Instructions: ${getSelectText('customInstructionSelect')}` });
     }
 
     return chips;
