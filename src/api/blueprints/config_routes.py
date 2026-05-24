@@ -213,225 +213,148 @@ def create_config_blueprint(server_session_id=None):
         keys = normalize_api_keys(raw)
         return keys[0] if keys else None
 
-    def _get_openrouter_models(provided_api_key=None):
-        """Get available text-only models from OpenRouter API"""
-        api_key = _resolve_api_key(provided_api_key, 'OPENROUTER_API_KEY', _config.OPENROUTER_API_KEY)
+    def _fetch_provider_models(
+        *,
+        provided_api_key,
+        env_var,
+        config_api_key,
+        config_default_model,
+        provider_class,
+        fallback_model,
+        status_prefix,
+        display_name,
+        api_key_missing_message,
+        get_models_kwargs=None,
+        model_name_field='id',
+        include_model_names_on_error=True,
+    ):
+        """Shared listing for cloud providers exposing `get_available_models()`.
 
-        # Use OPENROUTER_MODEL from .env, fallback to claude-sonnet-4
-        default_model = _config.OPENROUTER_MODEL if _config.OPENROUTER_MODEL else "anthropic/claude-sonnet-4"
+        Factors out the 5 nearly-identical model-listing flows (openrouter,
+        mistral, deepseek, poe, gemini). Each wrapper supplies its provider
+        class, config values, and a few small quirks (Gemini reads model 'name'
+        instead of 'id' and historically omits model_names from error bodies;
+        OpenRouter passes text_only=True).
+
+        Behavior is identical to the previous per-provider functions — kwargs
+        let each caller preserve its exact response shape and messages.
+        """
+        api_key = _resolve_api_key(provided_api_key, env_var, config_api_key)
+        default_model = config_default_model if config_default_model else fallback_model
+
+        def _error_body(status, message):
+            body = {
+                "models": [],
+                "default": default_model,
+                "status": status,
+                "count": 0,
+                "error": message,
+            }
+            if include_model_names_on_error:
+                body["model_names"] = []
+            return body
 
         if not api_key:
-            return jsonify({
-                "models": [],
-                "model_names": [],
-                "default": default_model,
-                "status": "api_key_missing",
-                "count": 0,
-                "error": "OpenRouter API key is required. Set OPENROUTER_API_KEY environment variable or pass api_key parameter."
-            })
+            return jsonify(_error_body("api_key_missing", api_key_missing_message))
 
         try:
-            from src.core.llm import OpenRouterProvider
+            provider = provider_class(api_key=api_key)
+            models = asyncio.run(provider.get_available_models(**(get_models_kwargs or {})))
 
-            openrouter_provider = OpenRouterProvider(api_key=api_key)
-            models = asyncio.run(openrouter_provider.get_available_models(text_only=True))
+            if not models:
+                return jsonify(_error_body(
+                    f"{status_prefix}_error",
+                    f"Failed to retrieve {display_name} models"
+                ))
 
-            if models:
-                model_names = [m['id'] for m in models]
-                # Check if default model exists in available models
-                if default_model not in model_names and model_names:
-                    default_model = model_names[0]
-                return jsonify({
-                    "models": models,
-                    "model_names": model_names,
-                    "default": default_model,
-                    "status": "openrouter_connected",
-                    "count": len(models)
-                })
-            else:
-                return jsonify({
-                    "models": [],
-                    "model_names": [],
-                    "default": default_model,
-                    "status": "openrouter_error",
-                    "count": 0,
-                    "error": "Failed to retrieve OpenRouter models"
-                })
+            model_names = [m[model_name_field] for m in models]
+            resolved_default = default_model
+            if resolved_default not in model_names and model_names:
+                resolved_default = model_names[0]
+
+            return jsonify({
+                "models": models,
+                "model_names": model_names,
+                "default": resolved_default,
+                "status": f"{status_prefix}_connected",
+                "count": len(models)
+            })
 
         except Exception as e:
-            return jsonify({
-                "models": [],
-                "model_names": [],
-                "default": default_model,
-                "status": "openrouter_error",
-                "count": 0,
-                "error": f"Error connecting to OpenRouter API: {str(e)}"
-            })
+            return jsonify(_error_body(
+                f"{status_prefix}_error",
+                f"Error connecting to {display_name} API: {str(e)}"
+            ))
+
+    def _get_openrouter_models(provided_api_key=None):
+        """Get available text-only models from OpenRouter API"""
+        from src.core.llm import OpenRouterProvider
+        return _fetch_provider_models(
+            provided_api_key=provided_api_key,
+            env_var='OPENROUTER_API_KEY',
+            config_api_key=_config.OPENROUTER_API_KEY,
+            config_default_model=_config.OPENROUTER_MODEL,
+            provider_class=OpenRouterProvider,
+            fallback_model="anthropic/claude-sonnet-4",
+            status_prefix="openrouter",
+            display_name="OpenRouter",
+            api_key_missing_message=(
+                "OpenRouter API key is required. Set OPENROUTER_API_KEY "
+                "environment variable or pass api_key parameter."
+            ),
+            get_models_kwargs={"text_only": True},
+        )
 
     def _get_mistral_models(provided_api_key=None):
         """Get available models from Mistral API"""
-        api_key = _resolve_api_key(provided_api_key, 'MISTRAL_API_KEY', _config.MISTRAL_API_KEY)
-
-        # Use MISTRAL_MODEL from .env, fallback to mistral-large-latest
-        default_model = _config.MISTRAL_MODEL if _config.MISTRAL_MODEL else "mistral-large-latest"
-
-        if not api_key:
-            return jsonify({
-                "models": [],
-                "model_names": [],
-                "default": default_model,
-                "status": "api_key_missing",
-                "count": 0,
-                "error": "Mistral API key is required. Set MISTRAL_API_KEY environment variable or pass api_key parameter."
-            })
-
-        try:
-            from src.core.llm import MistralProvider
-
-            mistral_provider = MistralProvider(api_key=api_key)
-            models = asyncio.run(mistral_provider.get_available_models())
-
-            if models:
-                model_names = [m['id'] for m in models]
-                # Check if default model exists in available models
-                if default_model not in model_names and model_names:
-                    default_model = model_names[0]
-                return jsonify({
-                    "models": models,
-                    "model_names": model_names,
-                    "default": default_model,
-                    "status": "mistral_connected",
-                    "count": len(models)
-                })
-            else:
-                return jsonify({
-                    "models": [],
-                    "model_names": [],
-                    "default": default_model,
-                    "status": "mistral_error",
-                    "count": 0,
-                    "error": "Failed to retrieve Mistral models"
-                })
-
-        except Exception as e:
-            return jsonify({
-                "models": [],
-                "model_names": [],
-                "default": default_model,
-                "status": "mistral_error",
-                "count": 0,
-                "error": f"Error connecting to Mistral API: {str(e)}"
-            })
+        from src.core.llm import MistralProvider
+        return _fetch_provider_models(
+            provided_api_key=provided_api_key,
+            env_var='MISTRAL_API_KEY',
+            config_api_key=_config.MISTRAL_API_KEY,
+            config_default_model=_config.MISTRAL_MODEL,
+            provider_class=MistralProvider,
+            fallback_model="mistral-large-latest",
+            status_prefix="mistral",
+            display_name="Mistral",
+            api_key_missing_message=(
+                "Mistral API key is required. Set MISTRAL_API_KEY "
+                "environment variable or pass api_key parameter."
+            ),
+        )
 
     def _get_deepseek_models(provided_api_key=None):
         """Get available models from DeepSeek API"""
-        api_key = _resolve_api_key(provided_api_key, 'DEEPSEEK_API_KEY', _config.DEEPSEEK_API_KEY)
-
-        # Use DEEPSEEK_MODEL from .env, fallback to the current DeepSeek recommended model.
-        default_model = _config.DEEPSEEK_MODEL if _config.DEEPSEEK_MODEL else "deepseek-v4-pro"
-
-        if not api_key:
-            return jsonify({
-                "models": [],
-                "model_names": [],
-                "default": default_model,
-                "status": "api_key_missing",
-                "count": 0,
-                "error": "DeepSeek API key is required. Set DEEPSEEK_API_KEY environment variable or pass api_key parameter."
-            })
-
-        try:
-            from src.core.llm import DeepSeekProvider
-
-            deepseek_provider = DeepSeekProvider(api_key=api_key)
-            models = asyncio.run(deepseek_provider.get_available_models())
-
-            if models:
-                model_names = [m['id'] for m in models]
-                # Check if default model exists in available models
-                if default_model not in model_names and model_names:
-                    default_model = model_names[0]
-                return jsonify({
-                    "models": models,
-                    "model_names": model_names,
-                    "default": default_model,
-                    "status": "deepseek_connected",
-                    "count": len(models)
-                })
-            else:
-                return jsonify({
-                    "models": [],
-                    "model_names": [],
-                    "default": default_model,
-                    "status": "deepseek_error",
-                    "count": 0,
-                    "error": "Failed to retrieve DeepSeek models"
-                })
-
-        except Exception as e:
-            return jsonify({
-                "models": [],
-                "model_names": [],
-                "default": default_model,
-                "status": "deepseek_error",
-                "count": 0,
-                "error": f"Error connecting to DeepSeek API: {str(e)}"
-            })
+        from src.core.llm import DeepSeekProvider
+        return _fetch_provider_models(
+            provided_api_key=provided_api_key,
+            env_var='DEEPSEEK_API_KEY',
+            config_api_key=_config.DEEPSEEK_API_KEY,
+            config_default_model=_config.DEEPSEEK_MODEL,
+            provider_class=DeepSeekProvider,
+            fallback_model="deepseek-v4-pro",
+            status_prefix="deepseek",
+            display_name="DeepSeek",
+            api_key_missing_message=(
+                "DeepSeek API key is required. Set DEEPSEEK_API_KEY "
+                "environment variable or pass api_key parameter."
+            ),
+        )
 
     def _get_poe_models(provided_api_key=None):
         """Get available models from Poe API"""
-        api_key = _resolve_api_key(provided_api_key, 'POE_API_KEY', _config.POE_API_KEY)
-
-        # Use POE_MODEL from .env, fallback to Claude-Sonnet-4
-        default_model = _config.POE_MODEL if _config.POE_MODEL else "Claude-Sonnet-4"
-
-        if not api_key:
-            return jsonify({
-                "models": [],
-                "model_names": [],
-                "default": default_model,
-                "status": "api_key_missing",
-                "count": 0,
-                "error": "Poe API key is required. Get your key at https://poe.com/api_key"
-            })
-
-        try:
-            from src.core.llm.providers.poe import PoeProvider
-
-            poe_provider = PoeProvider(api_key=api_key)
-            models = asyncio.run(poe_provider.get_available_models())
-
-            if models:
-                model_names = [m['id'] for m in models]
-                # Check if default model exists in available models
-                if default_model not in model_names and model_names:
-                    default_model = model_names[0]
-                return jsonify({
-                    "models": models,
-                    "model_names": model_names,
-                    "default": default_model,
-                    "status": "poe_connected",
-                    "count": len(models)
-                })
-            else:
-                return jsonify({
-                    "models": [],
-                    "model_names": [],
-                    "default": default_model,
-                    "status": "poe_error",
-                    "count": 0,
-                    "error": "Failed to retrieve Poe models"
-                })
-
-        except Exception as e:
-            return jsonify({
-                "models": [],
-                "model_names": [],
-                "default": default_model,
-                "status": "poe_error",
-                "count": 0,
-                "error": f"Error connecting to Poe API: {str(e)}"
-            })
+        from src.core.llm.providers.poe import PoeProvider
+        return _fetch_provider_models(
+            provided_api_key=provided_api_key,
+            env_var='POE_API_KEY',
+            config_api_key=_config.POE_API_KEY,
+            config_default_model=_config.POE_MODEL,
+            provider_class=PoeProvider,
+            fallback_model="Claude-Sonnet-4",
+            status_prefix="poe",
+            display_name="Poe",
+            api_key_missing_message="Poe API key is required. Get your key at https://poe.com/api_key",
+        )
 
     def _get_nim_models(provided_api_key=None):
         """Get available models from NVIDIA NIM API"""
@@ -660,55 +583,25 @@ def create_config_blueprint(server_session_id=None):
 
     def _get_gemini_models(provided_api_key=None):
         """Get available models from Gemini API"""
-        api_key = _resolve_api_key(provided_api_key, 'GEMINI_API_KEY', _config.GEMINI_API_KEY)
-
-        # Use GEMINI_MODEL from .env, fallback to gemini-2.0-flash
-        default_model = _config.GEMINI_MODEL if _config.GEMINI_MODEL else "gemini-2.0-flash"
-
-        if not api_key:
-            return jsonify({
-                "models": [],
-                "default": default_model,
-                "status": "api_key_missing",
-                "count": 0,
-                "error": "Gemini API key is required. Set GEMINI_API_KEY environment variable or pass api_key parameter."
-            })
-
-        try:
-            from src.core.llm import GeminiProvider
-
-            gemini_provider = GeminiProvider(api_key=api_key)
-            models = asyncio.run(gemini_provider.get_available_models())
-
-            if models:
-                model_names = [m['name'] for m in models]
-                # Check if default model exists in available models
-                if default_model not in model_names and model_names:
-                    default_model = model_names[0]
-                return jsonify({
-                    "models": models,
-                    "model_names": model_names,
-                    "default": default_model,
-                    "status": "gemini_connected",
-                    "count": len(models)
-                })
-            else:
-                return jsonify({
-                    "models": [],
-                    "default": default_model,
-                    "status": "gemini_error",
-                    "count": 0,
-                    "error": "Failed to retrieve Gemini models"
-                })
-
-        except Exception as e:
-            return jsonify({
-                "models": [],
-                "default": default_model,
-                "status": "gemini_error",
-                "count": 0,
-                "error": f"Error connecting to Gemini API: {str(e)}"
-            })
+        from src.core.llm import GeminiProvider
+        # Gemini's model dicts use 'name', not 'id'; error bodies historically
+        # omit model_names (preserved for response-shape compatibility).
+        return _fetch_provider_models(
+            provided_api_key=provided_api_key,
+            env_var='GEMINI_API_KEY',
+            config_api_key=_config.GEMINI_API_KEY,
+            config_default_model=_config.GEMINI_MODEL,
+            provider_class=GeminiProvider,
+            fallback_model="gemini-2.0-flash",
+            status_prefix="gemini",
+            display_name="Gemini",
+            api_key_missing_message=(
+                "Gemini API key is required. Set GEMINI_API_KEY "
+                "environment variable or pass api_key parameter."
+            ),
+            model_name_field='name',
+            include_model_names_on_error=False,
+        )
 
     def _get_ollama_models():
         """Get available models from Ollama API"""

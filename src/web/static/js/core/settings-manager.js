@@ -51,40 +51,6 @@ const AUTO_SAVE_DELAY = 1000; // 1 second debounce
  */
 let isInitializing = true;
 
-/**
- * Settings that are saved to localStorage (non-sensitive)
- */
-const LOCAL_SETTINGS = [
-    'lastProvider',
-    'lastModel',
-    'lastSourceLanguage',
-    'lastTargetLanguage',
-    'lastApiEndpoint',
-    'lastOpenaiEndpoint',
-    'outputFilenamePattern',
-    'ttsEnabled',
-    'textCleanup',
-    'refineTranslation',
-    'bilingualMode',
-    'draftMode',
-    'customInstructionFile',
-    'apiEndpointCustomized',  // Track if user manually changed endpoint
-    'openaiEndpointCustomized'
-];
-
-/**
- * Settings that are saved to .env via API (sensitive)
- */
-const ENV_SETTINGS_MAP = {
-    'geminiApiKey': 'GEMINI_API_KEY',
-    'openaiApiKey': 'OPENAI_API_KEY',
-    'openrouterApiKey': 'OPENROUTER_API_KEY',
-    'mistralApiKey': 'MISTRAL_API_KEY',
-    'deepseekApiKey': 'DEEPSEEK_API_KEY',
-    'poeApiKey': 'POE_API_KEY',
-    'nimApiKey': 'NIM_API_KEY'
-};
-
 export const SettingsManager = {
     /**
      * Initialize settings manager - load saved preferences and setup auto-save
@@ -486,41 +452,6 @@ export const SettingsManager = {
             return DomHelpers.getValue(customInputId) || selectVal;
         }
         return selectVal;
-    },
-
-    /**
-     * Save API key to .env file via server
-     * @param {string} provider - Provider name (gemini, openai, openrouter)
-     * @param {string} apiKey - The API key to save
-     * @returns {Promise<boolean>} Success status
-     */
-    async saveApiKey(provider, apiKey) {
-        const keyMap = {
-            'gemini': 'GEMINI_API_KEY',
-            'openai': 'OPENAI_API_KEY',
-            'openrouter': 'OPENROUTER_API_KEY',
-            'mistral': 'MISTRAL_API_KEY',
-            'deepseek': 'DEEPSEEK_API_KEY',
-            'poe': 'POE_API_KEY',
-            'nim': 'NIM_API_KEY'
-        };
-
-        const envKey = keyMap[provider];
-        if (!envKey) {
-            console.error('Unknown provider:', provider);
-            return false;
-        }
-
-        try {
-            const result = await ApiClient.saveSettings({ [envKey]: apiKey });
-            if (result.success) {
-                MessageLogger.addLog(`API key saved for ${provider}`);
-                return true;
-            }
-            return false;
-        } catch {
-            return false;
-        }
     },
 
     /**
