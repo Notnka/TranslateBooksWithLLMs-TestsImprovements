@@ -140,7 +140,7 @@ async def translate_file(
     # TODO: Refactor EPUB translation to properly work with the adapter pattern
     if detected_type == 'epub':
         from src.core.epub.translator import translate_epub_file
-        await translate_epub_file(
+        return await translate_epub_file(
             input_filepath=input_filepath,
             output_filepath=output_filepath,
             source_language=source_language,
@@ -168,7 +168,6 @@ async def translate_file(
             bilingual=bilingual_output,
             **additional_config
         )
-        return True  # Legacy function doesn't return success status
 
     # DOCX translation using EPUB pipeline (Phase 1 implementation)
     # Similar to EPUB, DOCX requires HTML chunking, tag preservation, etc.

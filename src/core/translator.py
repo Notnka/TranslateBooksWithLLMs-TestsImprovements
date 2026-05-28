@@ -960,6 +960,7 @@ async def _make_refinement_request(
     prompt_options: dict = None,
     context_manager: AdaptiveContextManager = None,
     runtime_state: Optional[dict] = None,
+    source_text: str = "",
 ) -> Tuple[Optional[str], Optional[LLMResponse]]:
     """
     Make LLM request for refinement pass.
@@ -978,6 +979,7 @@ async def _make_refinement_request(
         has_placeholders: If True, includes placeholder preservation instructions
         prompt_options: Optional dict with prompt customization options
         context_manager: AdaptiveContextManager for context sizing
+        source_text: Original source-language text for glossary filtering
 
     Returns:
         Tuple of (refined_text or None, LLMResponse)
@@ -985,10 +987,10 @@ async def _make_refinement_request(
     # Extract refinement instructions from prompt_options
     refinement_instructions = prompt_options.get('refinement_instructions', '') if prompt_options else ''
 
-    # Filter the glossary against the DRAFT (target language) — terms that survived
-    # the first pass are the ones we want to keep stable through refinement.
+    # Filter the glossary against the SOURCE text — glossary terms are stored as
+    # source -> target mappings, so we must match against the original language.
     glossary_block = _build_chunk_glossary_block(
-        draft_translation, prompt_options, log_callback=log_callback,
+        source_text, prompt_options, log_callback=log_callback,
         runtime_state=runtime_state,
     )
 
@@ -1284,6 +1286,7 @@ async def refine_chunks(
                 context_after = original_chunks[i].get("context_after", "")
 
             # Make refinement request
+            source_text = original_chunks[i].get("main_content", "") if i < len(original_chunks) else ""
             try:
                 refined_text, llm_response = await _make_refinement_request(
                     draft_translation=draft_text,
@@ -1298,6 +1301,7 @@ async def refine_chunks(
                     prompt_options=prompt_options,
                     context_manager=context_manager,
                     runtime_state=runtime_state,
+                    source_text=source_text,
                 )
             except RateLimitError as e:
                 if log_callback:

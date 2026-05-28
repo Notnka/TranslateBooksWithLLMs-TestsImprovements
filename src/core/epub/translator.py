@@ -60,7 +60,7 @@ async def translate_epub_file(
     max_tokens_per_chunk: int = MAX_TOKENS_PER_CHUNK,
     max_attempts: int = None,
     bilingual: bool = False,
-) -> None:
+) -> bool:
     """
     Translate an EPUB file using LLM with generic orchestrator.
 
@@ -109,7 +109,7 @@ async def translate_epub_file(
         err_msg = f"ERROR: Input EPUB file '{input_filepath}' not found."
         if log_callback:
             log_callback("epub_input_file_not_found", err_msg)
-        return
+        return False
 
     # Use default MAX_TRANSLATION_ATTEMPTS if not provided
     if max_attempts is None:
@@ -148,7 +148,7 @@ async def translate_epub_file(
     )
 
     if llm_client is None:
-        return
+        return False
 
     # Create adaptive context manager
     context_manager = _create_context_manager(
@@ -159,6 +159,7 @@ async def translate_epub_file(
         log_callback=log_callback
     )
 
+    success = False
     with tempfile.TemporaryDirectory() as temp_dir:
         try:
             # 1. Extract EPUB
@@ -297,16 +298,20 @@ async def translate_epub_file(
                     log_callback("epub_ltr_complete", 
                                f"📖 EPUB ready for LTR reading: text direction reset to left-to-right")
 
+            success = True
         except Exception as e_epub:
             # Re-raise RateLimitError to trigger auto-pause
             from src.core.llm.exceptions import RateLimitError
             if isinstance(e_epub, RateLimitError):
                 raise
+            success = False
             err_msg = f"MAJOR ERROR processing EPUB '{input_filepath}': {e_epub}"
             if log_callback:
                 log_callback("epub_major_error", err_msg)
                 import traceback
                 log_callback("epub_major_error_traceback", traceback.format_exc())
+
+    return success
 
 
 # === Private Helper Functions ===

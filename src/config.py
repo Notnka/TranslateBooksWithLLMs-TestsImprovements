@@ -408,12 +408,7 @@ PLACEHOLDER_SUFFIX = "]"
 PLACEHOLDER_PATTERN = r'\[id(\d+)\]'
 """Regex pattern for placeholders (e.g., [id0])"""
 
-# Maximum retries for placeholder validation before falling back to source text
-MAX_PLACEHOLDER_RETRIES = 0
-"""Number of retry attempts when placeholder validation fails"""
 
-MAX_PLACEHOLDER_CORRECTION_ATTEMPTS = 0
-"""Number of LLM correction attempts before falling back to proportional insertion (0 = skip correction phase entirely)"""
 
 # =============================================================================
 # TOKEN ALIGNMENT FALLBACK CONFIGURATION (Phase 2)
