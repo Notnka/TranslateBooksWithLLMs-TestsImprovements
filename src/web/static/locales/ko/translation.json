@@ -101,6 +101,14 @@
   "translation_completed_card_title": "번역 완료",
   "completion_card_dismiss": "닫기",
   "completion_failed_chunks": "{{count}}개 실패",
+  "completion_fallback_chunks": "서식 폴백 {{count}}건",
+  "completion_placeholder_errors": "서식 미흡 {{count}}건",
+  "completion_warning_heading": "번역은 정확합니다 — 서식만 확인이 필요할 수 있습니다",
+  "completion_warning_token_alignment": "태그 위치가 근사적인 청크 {{count}}개",
+  "completion_warning_untranslated": "원문 그대로 유지된 청크 {{count}}개",
+  "completion_warning_placeholder_errors": "서식 미흡 {{count}}건",
+  "completion_warning_failed": "실패한 청크 {{count}}개",
+  "completion_warning_intro": "LLM이 원본 서식(인라인 태그, 스타일, 줄바꿈)을 완벽하게 유지하는 데 어려움을 겪었습니다. {{processed}}개 청크 중 {{retryPct}}%가 재시도를 필요로 했고, {{fallbackPct}}%가 태그를 근사 위치로 배치했습니다 (청크당 평균 {{avgErrors}}건의 서식 미흡). 다음 실행 시 더 깔끔한 서식을 원하시면 다음을 고려하세요:",
 
   "session_restored_log": "🔄 이전 번역 세션이 복원되었습니다",
   "session_corrupted_log": "이전 세션 상태가 손상되어 새로 시작합니다",
@@ -184,5 +192,15 @@
   "settings_save_failed": "❌ 저장 실패: {{error}}",
   "preferences_save_quota": "브라우저 저장 공간이 가득 차서 환경 설정을 저장할 수 없습니다",
   "preferences_save_failed_log": "환경 설정 저장 실패",
-  "preferences_load_failed_log": "저장된 환경 설정을 로드할 수 없습니다"
+  "preferences_load_failed_log": "저장된 환경 설정을 로드할 수 없습니다",
+
+  "summary_refining_in": "{{lang}}로 다듬는 중",
+  "summary_refine_only": "다듬기만 (번역 생략)",
+  "summary_no_auto_pause": "자동 일시정지 없음",
+  "summary_bilingual": "이중 언어",
+  "summary_plain_text_mode": "일반 텍스트 모드",
+  "summary_ocr_cleanup": "OCR 정리",
+  "summary_glossary": "용어집: {{name}}",
+  "summary_instructions": "지침: {{name}}",
+  "summary_lang_auto_detect": "자동 감지"
 }

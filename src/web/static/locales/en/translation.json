@@ -101,6 +101,14 @@
   "translation_completed_card_title": "Translation completed",
   "completion_card_dismiss": "Dismiss",
   "completion_failed_chunks": "{{count}} failed",
+  "completion_fallback_chunks": "{{count}} formatting fallback(s)",
+  "completion_placeholder_errors": "{{count}} formatting issue(s)",
+  "completion_warning_heading": "Translations are correct — only the formatting may need attention",
+  "completion_warning_token_alignment": "{{count}} chunk(s) with approximate tag placement",
+  "completion_warning_untranslated": "{{count}} chunk(s) kept in source language",
+  "completion_warning_placeholder_errors": "{{count}} formatting issue(s)",
+  "completion_warning_failed": "{{count}} failed chunk(s)",
+  "completion_warning_intro": "The LLM had trouble keeping the original formatting (inline tags, styles, line breaks) perfectly in place. Across {{processed}} chunks: {{retryPct}}% needed retries and {{fallbackPct}}% used approximate tag positioning (avg {{avgErrors}} formatting issues per chunk). For cleaner formatting next time, consider:",
 
   "session_restored_log": "🔄 Restored previous translation session",
   "session_corrupted_log": "Previous session state was corrupted, starting fresh",
@@ -184,5 +192,15 @@
   "settings_save_failed": "❌ Failed to save: {{error}}",
   "preferences_save_quota": "Browser storage full, could not save preferences",
   "preferences_save_failed_log": "Failed to save preferences",
-  "preferences_load_failed_log": "Could not load saved preferences"
+  "preferences_load_failed_log": "Could not load saved preferences",
+
+  "summary_refining_in": "Refining in {{lang}}",
+  "summary_refine_only": "Refine Only (skips translation)",
+  "summary_no_auto_pause": "No auto-pause",
+  "summary_bilingual": "Bilingual",
+  "summary_plain_text_mode": "Plain Text Mode",
+  "summary_ocr_cleanup": "OCR cleanup",
+  "summary_glossary": "Glossary: {{name}}",
+  "summary_instructions": "Instructions: {{name}}",
+  "summary_lang_auto_detect": "auto-detect"
 }

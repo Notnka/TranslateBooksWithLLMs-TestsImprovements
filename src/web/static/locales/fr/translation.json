@@ -101,6 +101,14 @@
   "translation_completed_card_title": "Traduction terminée",
   "completion_card_dismiss": "Ignorer",
   "completion_failed_chunks": "{{count}} échec(s)",
+  "completion_fallback_chunks": "{{count}} repli(s) de formatage",
+  "completion_placeholder_errors": "{{count}} imperfection(s) de formatage",
+  "completion_warning_heading": "Les traductions sont correctes — seul le formatage peut nécessiter de l'attention",
+  "completion_warning_token_alignment": "{{count}} chunk(s) avec placement de balises approximatif",
+  "completion_warning_untranslated": "{{count}} chunk(s) laissé(s) dans la langue source",
+  "completion_warning_placeholder_errors": "{{count}} imperfection(s) de formatage",
+  "completion_warning_failed": "{{count}} chunk(s) en échec",
+  "completion_warning_intro": "Le LLM a eu du mal à préserver parfaitement la mise en forme d'origine (balises inline, styles, retours à la ligne). Sur {{processed}} chunks : {{retryPct}}% ont nécessité des tentatives et {{fallbackPct}}% sont passés en positionnement approximatif des balises (moy. {{avgErrors}} imperfections de formatage par chunk). Pour un formatage plus propre la prochaine fois, pensez à :",
 
   "session_restored_log": "🔄 Session de traduction précédente restaurée",
   "session_corrupted_log": "L'état de la session précédente était corrompu, nouveau démarrage",
@@ -184,5 +192,15 @@
   "settings_save_failed": "❌ Échec de l'enregistrement : {{error}}",
   "preferences_save_quota": "Stockage du navigateur plein, impossible d'enregistrer les préférences",
   "preferences_save_failed_log": "Échec de l'enregistrement des préférences",
-  "preferences_load_failed_log": "Impossible de charger les préférences enregistrées"
+  "preferences_load_failed_log": "Impossible de charger les préférences enregistrées",
+
+  "summary_refining_in": "Affinage en {{lang}}",
+  "summary_refine_only": "Affinage seul (saute la traduction)",
+  "summary_no_auto_pause": "Pas de pause auto",
+  "summary_bilingual": "Bilingue",
+  "summary_plain_text_mode": "Mode texte brut",
+  "summary_ocr_cleanup": "Nettoyage OCR",
+  "summary_glossary": "Glossaire : {{name}}",
+  "summary_instructions": "Instructions : {{name}}",
+  "summary_lang_auto_detect": "détection auto"
 }
