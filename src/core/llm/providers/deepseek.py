@@ -317,6 +317,10 @@ class DeepSeekProvider(LLMProvider):
                 return None
 
             except Exception as e:
+                # Re-raise RateLimitError to trigger upstream auto-pause
+                from ..exceptions import RateLimitError
+                if isinstance(e, RateLimitError):
+                    raise
                 print(f"DeepSeek API Unknown Error (attempt {attempt + 1}/{MAX_TRANSLATION_ATTEMPTS}): {e}")
                 if attempt < MAX_TRANSLATION_ATTEMPTS - 1:
                     await asyncio.sleep(2)

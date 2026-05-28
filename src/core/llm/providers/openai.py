@@ -312,6 +312,11 @@ class OpenAICompatibleProvider(LLMProvider):
 
                 return None
             except Exception as e:
+                # Re-raise RateLimitError to trigger upstream auto-pause
+                from ..exceptions import RateLimitError
+                if isinstance(e, RateLimitError):
+                    raise
+
                 RED = '\033[91m'
                 YELLOW = '\033[93m'
                 RESET = '\033[0m'
